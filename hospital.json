@@ -1,0 +1,377 @@
+{
+  "hospital": {
+    "id": "HSP001",
+    "name": "CityCare Multispeciality Hospital",
+    "location": "Raj Nagar, Ghaziabad",
+    "type": "Multispeciality",
+    "contact": "+91-9876543210",
+    "email": "info@citycare.com",
+    "capacity": 250,
+    "rating": 4.6,
+    "open24x7": true
+  },
+
+  "departments": [
+    { "id": "D001", "name": "Cardiology", "head": "Dr. Mehta", "floor": 2, "patientCount": 15 },
+    { "id": "D002", "name": "Neurology", "head": "Dr. Sharma", "floor": 3, "patientCount": 8 },
+    { "id": "D003", "name": "Orthopedics", "head": "Dr. Arjun Rao", "floor": 4, "patientCount": 12 },
+    { "id": "D004", "name": "Pediatrics", "head": "Dr. Kavya", "floor": 1, "patientCount": 20 },
+    { "id": "D005", "name": "Emergency", "head": "Dr. Nair", "floor": 0, "patientCount": 5 },
+    { "id": "D006", "name": "Pharmacy", "head": "Mr. Suresh", "floor": 1, "patientCount": 0 },
+    { "id": "D007", "name": "Laboratory", "head": "Dr. Anita", "floor": 2, "patientCount": 0 }
+  ],
+
+  "doctors": [
+    {
+      "id": "DOC101",
+      "name": "Dr. Rohan Singh",
+      "specialization": "Cardiologist",
+      "experience": "12 Years",
+      "rating": 4.8,
+      "available": true,
+      "timing": "10 AM - 5 PM"
+    },
+    {
+      "id": "DOC102",
+      "name": "Dr. Priya Sharma",
+      "specialization": "Neurologist",
+      "experience": "8 Years",
+      "rating": 4.6,
+      "available": true,
+      "timing": "11 AM - 4 PM"
+    },
+    {
+      "id": "DOC103",
+      "name": "Dr. Aman Verma",
+      "specialization": "Orthopedic",
+      "experience": "10 Years",
+      "rating": 4.4,
+      "available": true,
+      "timing": "9 AM - 2 PM"
+    },
+    {
+      "id": "DOC104",
+      "name": "Dr. Kavya Reddy",
+      "specialization": "Pediatrician",
+      "experience": "6 Years",
+      "rating": 4.7,
+      "available": true,
+      "timing": "8 AM - 3 PM"
+    },
+    {
+      "id": "DOC105",
+      "name": "Dr. Rajesh Nair",
+      "specialization": "Emergency Medicine",
+      "experience": "15 Years",
+      "rating": 4.9,
+      "available": true,
+      "timing": "24/7"
+    }
+  ],
+
+  "patients": [
+    {
+      "id": "PAT501",
+      "name": "Dharun Kumar",
+      "age": 22,
+      "gender": "Male",
+      "phone": "9876541230",
+      "address": "Raj Nagar, Ghaziabad",
+      "bloodGroup": "O+",
+      "admitted": false,
+      "visitDate": "2024-12-20"
+    },
+    {
+      "id": "PAT502",
+      "name": "Aisha Khan",
+      "age": 27,
+      "gender": "Female",
+      "phone": "9123456780",
+      "address": "Indirapuram",
+      "bloodGroup": "A+",
+      "admitted": true,
+      "roomId": "RM203",
+      "visitDate": "2024-12-20"
+    },
+    {
+      "id": "PAT503",
+      "name": "Rahul Gupta",
+      "age": 35,
+      "gender": "Male",
+      "phone": "9988776655",
+      "address": "Vaishali",
+      "bloodGroup": "B+",
+      "admitted": false,
+      "visitDate": "2024-12-20"
+    },
+    {
+      "id": "PAT504",
+      "name": "Priya Singh",
+      "age": 29,
+      "gender": "Female",
+      "phone": "9876543210",
+      "address": "Ghaziabad",
+      "bloodGroup": "AB+",
+      "admitted": false,
+      "visitDate": "2024-12-20"
+    },
+    {
+      "id": "PAT505",
+      "name": "Amit Sharma",
+      "age": 45,
+      "gender": "Male",
+      "phone": "9123456789",
+      "address": "Noida",
+      "bloodGroup": "O-",
+      "admitted": true,
+      "roomId": "RM201",
+      "visitDate": "2024-12-20"
+    }
+  ],
+
+  "appointments": [
+    {
+      "id": "APT901",
+      "patientId": "PAT501",
+      "doctorId": "DOC101",
+      "date": "2024-12-20",
+      "time": "11:00 AM",
+      "status": "Completed",
+      "fee": 800,
+      "paymentMethod": "Cash",
+      "paymentStatus": "Paid"
+    },
+    {
+      "id": "APT902",
+      "patientId": "PAT502",
+      "doctorId": "DOC103",
+      "date": "2024-12-20",
+      "time": "02:00 PM",
+      "status": "Completed",
+      "fee": 1200,
+      "paymentMethod": "Card",
+      "paymentStatus": "Paid"
+    },
+    {
+      "id": "APT903",
+      "patientId": "PAT503",
+      "doctorId": "DOC102",
+      "date": "2024-12-20",
+      "time": "10:30 AM",
+      "status": "Pending"
+    },
+    {
+      "id": "APT904",
+      "patientId": "PAT504",
+      "doctorId": "DOC104",
+      "date": "2024-12-20",
+      "time": "09:15 AM",
+      "status": "Completed",
+      "fee": 600,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid"
+    },
+    {
+      "id": "APT905",
+      "patientId": "PAT505",
+      "doctorId": "DOC105",
+      "date": "2024-12-20",
+      "time": "03:45 PM",
+      "status": "Confirmed"
+    },
+    {
+      "id": "APT906",
+      "patientId": "PAT501",
+      "doctorId": "DOC102",
+      "date": "2024-12-21",
+      "time": "10:00 AM",
+      "status": "Scheduled"
+    },
+    {
+      "id": "APT907",
+      "patientId": "PAT503",
+      "doctorId": "DOC104",
+      "date": "2024-12-19",
+      "time": "02:30 PM",
+      "status": "Completed",
+      "fee": 650,
+      "paymentMethod": "Cash",
+      "paymentStatus": "Paid"
+    },
+    {
+      "id": "APT908",
+      "patientId": "PAT502",
+      "doctorId": "DOC101",
+      "date": "2024-12-18",
+      "time": "11:30 AM",
+      "status": "Cancelled"
+    }
+  ],
+
+  "pharmacy": [
+    {
+      "id": "MED301",
+      "name": "Paracetamol",
+      "type": "Tablet",
+      "stock": 120,
+      "price": 25
+    },
+    {
+      "id": "MED302",
+      "name": "Azithromycin",
+      "type": "Antibiotic",
+      "stock": 35,
+      "price": 95
+    },
+    {
+      "id": "MED303",
+      "name": "Cough Syrup",
+      "type": "Liquid",
+      "stock": 25,
+      "price": 80
+    },
+    {
+      "id": "MED304",
+      "name": "Insulin",
+      "type": "Injection",
+      "stock": 15,
+      "price": 450
+    },
+    {
+      "id": "MED305",
+      "name": "Aspirin",
+      "type": "Tablet",
+      "stock": 80,
+      "price": 12
+    }
+  ],
+
+  "billing": [
+    {
+      "id": "BILL701",
+      "patientId": "PAT502",
+      "roomCharge": 1500,
+      "doctorFee": 700,
+      "pharmacyCharges": 340,
+      "total": 2540,
+      "status": "Paid",
+      "date": "2024-12-20"
+    },
+    {
+      "id": "BILL702",
+      "patientId": "PAT505",
+      "roomCharge": 2000,
+      "doctorFee": 1200,
+      "pharmacyCharges": 580,
+      "total": 3780,
+      "status": "Pending",
+      "date": "2024-12-20"
+    }
+  ],
+
+  "rooms": [
+    { "roomId": "RM201", "type": "General", "occupied": true },
+    { "roomId": "RM202", "type": "Deluxe", "occupied": false },
+    { "roomId": "RM203", "type": "ICU", "occupied": true },
+    { "roomId": "RM204", "type": "ICU", "occupied": false },
+    { "roomId": "RM205", "type": "General", "occupied": false },
+    { "roomId": "RM206", "type": "Deluxe", "occupied": false }
+  ],
+
+  "staff": [
+    { "id": "STF001", "name": "Rakesh", "role": "Nurse", "shift": "Morning", "salary": 35000, "joiningDate": "2023-01-15", "status": "Active" },
+    { "id": "STF002", "name": "Sneha", "role": "Receptionist", "shift": "Full Day", "salary": 25000, "joiningDate": "2023-03-10", "status": "Active" },
+    { "id": "STF003", "name": "Arjun", "role": "Ward Boy", "shift": "Night", "salary": 18000, "joiningDate": "2023-05-20", "status": "Active" },
+    { "id": "STF004", "name": "Meera", "role": "Nurse", "shift": "Evening", "salary": 32000, "joiningDate": "2023-02-28", "status": "Leave" },
+    { "id": "STF005", "name": "Ravi", "role": "Lab Technician", "shift": "Morning", "salary": 28000, "joiningDate": "2023-04-12", "status": "Active" },
+    { "id": "STF006", "name": "Sunita", "role": "Pharmacist", "shift": "Full Day", "salary": 30000, "joiningDate": "2023-01-08", "status": "Active" },
+    { "id": "STF007", "name": "Amit", "role": "Cleaning Staff", "shift": "Morning", "salary": 15000, "joiningDate": "2023-06-01", "status": "Active" },
+    { "id": "STF008", "name": "Priya", "role": "Radiologist", "shift": "Full Day", "salary": 45000, "joiningDate": "2023-02-15", "status": "Active" },
+    { "id": "STF009", "name": "Rajesh", "role": "Watchman", "shift": "Night", "salary": 20000, "joiningDate": "2023-03-25", "status": "Leave" },
+    { "id": "STF010", "name": "Kavita", "role": "Physiotherapist", "shift": "Morning", "salary": 38000, "joiningDate": "2023-04-05", "status": "Active" }
+  ],
+
+  "surgeries": [
+    {
+      "id": "SUR001",
+      "patientId": "PAT502",
+      "doctorId": "DOC101",
+      "type": "Cardiac Surgery",
+      "date": "2024-12-20",
+      "time": "10:00 AM",
+      "status": "Scheduled"
+    },
+    {
+      "id": "SUR002",
+      "patientId": "PAT505",
+      "doctorId": "DOC103",
+      "type": "Orthopedic Surgery",
+      "date": "2024-12-20",
+      "time": "2:00 PM",
+      "status": "Scheduled"
+    },
+    {
+      "id": "SUR003",
+      "patientId": "PAT503",
+      "doctorId": "DOC102",
+      "type": "Neurosurgery",
+      "date": "2024-12-20",
+      "time": "4:30 PM",
+      "status": "Scheduled"
+    }
+  ],
+
+  "emergencies": [
+    {
+      "id": "EMR001",
+      "patientName": "Unknown Patient 1",
+      "condition": "Heart Attack",
+      "severity": "Critical",
+      "arrivalTime": "08:30 AM",
+      "status": "Under Treatment"
+    },
+    {
+      "id": "EMR002",
+      "patientName": "Unknown Patient 2",
+      "condition": "Road Accident",
+      "severity": "Serious",
+      "arrivalTime": "10:15 AM",
+      "status": "Stable"
+    },
+    {
+      "id": "EMR003",
+      "patientName": "Unknown Patient 3",
+      "condition": "Poisoning",
+      "severity": "Moderate",
+      "arrivalTime": "12:45 PM",
+      "status": "Under Treatment"
+    }
+  ],
+
+  "onlineConsultations": [
+    {
+      "id": "OC001",
+      "patientId": "PAT501",
+      "doctorId": "DOC102",
+      "date": "2024-12-21",
+      "time": "11:00 AM",
+      "status": "Scheduled",
+      "meetingLink": "https://meet.hospital.com/oc001",
+      "requirements": "Headache and dizziness for 3 days",
+      "fee": 500
+    },
+    {
+      "id": "OC002",
+      "patientId": "PAT503",
+      "doctorId": "DOC101",
+      "date": "2024-12-20",
+      "time": "03:00 PM",
+      "status": "Completed",
+      "meetingLink": "https://meet.hospital.com/oc002",
+      "requirements": "Chest pain and breathing issues",
+      "fee": 800,
+      "paymentMethod": "UPI",
+      "paymentStatus": "Paid"
+    }
+  ]
+}
