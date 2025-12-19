@@ -1,4 +1,4 @@
-const Hospital = require("../Model/hospitalModel");
+const { Hospital } = require("../Model/mongoModels");
 
 exports.getAllHospitals = async (req, res) => {
     try {

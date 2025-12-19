@@ -74,6 +74,7 @@ const staffSchema = new mongoose.Schema({
 });
 
 const roomSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
   roomId: { type: String, required: true, unique: true },
   type: String,
   occupied: Boolean
@@ -133,17 +134,17 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  Hospital: mongoose.model('Hospital', hospitalSchema),
-  Doctor: mongoose.model('Doctor', doctorSchema),
-  Patient: mongoose.model('Patient', patientSchema),
-  Appointment: mongoose.model('Appointment', appointmentSchema),
-  Department: mongoose.model('Department', departmentSchema),
-  Medicine: mongoose.model('Medicine', medicineSchema),
-  Staff: mongoose.model('Staff', staffSchema),
-  Room: mongoose.model('Room', roomSchema),
-  Billing: mongoose.model('Billing', billingSchema),
-  Surgery: mongoose.model('Surgery', surgerySchema),
-  Emergency: mongoose.model('Emergency', emergencySchema),
-  Consultation: mongoose.model('Consultation', consultationSchema),
-  User: mongoose.model('User', userSchema)
+  Hospital: mongoose.models.Hospital || mongoose.model('Hospital', hospitalSchema),
+  Doctor: mongoose.models.Doctor || mongoose.model('Doctor', doctorSchema),
+  Patient: mongoose.models.Patient || mongoose.model('Patient', patientSchema),
+  Appointment: mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema),
+  Department: mongoose.models.Department || mongoose.model('Department', departmentSchema),
+  Medicine: mongoose.models.Medicine || mongoose.model('Medicine', medicineSchema),
+  Staff: mongoose.models.Staff || mongoose.model('Staff', staffSchema),
+  Room: mongoose.models.Room || mongoose.model('Room', roomSchema),
+  Billing: mongoose.models.Billing || mongoose.model('Billing', billingSchema),
+  Surgery: mongoose.models.Surgery || mongoose.model('Surgery', surgerySchema),
+  Emergency: mongoose.models.Emergency || mongoose.model('Emergency', emergencySchema),
+  Consultation: mongoose.models.Consultation || mongoose.model('Consultation', consultationSchema),
+  User: mongoose.models.User || mongoose.model('User', userSchema)
 };

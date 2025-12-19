@@ -1,89 +1,265 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
-const Doctor = require('./Model/doctorModel');
-const Patient = require('./Model/patientModel');
-const Appointment = require('./Model/appointmentModel');
-const Pharmacy = require('./Model/pharmacyModel');
-const Room = require('./Model/roomModel');
-const Staff = require('./Model/staffModel');
+const {
+  Hospital,
+  Doctor,
+  Patient,
+  Appointment,
+  Department,
+  Medicine,
+  Staff,
+  Room,
+  User
+} = require('./Model/mongoModels');
 
 dotenv.config({ path: "./config.env" });
 
-// Connect to MongoDB
-mongoose.connect(process.env.DB_URL)
-  .then(() => console.log("DATABASE SUCCESSFULLY CONNECTED"))
-  .catch(err => console.error(err));
-
 const seedData = async () => {
   try {
+    await mongoose.connect(process.env.DB_URL);
+    console.log('Connected to MongoDB');
+
     // Clear existing data
-    await Doctor.deleteMany({});
-    await Patient.deleteMany({});
-    await Appointment.deleteMany({});
-    await Pharmacy.deleteMany({});
-    await Room.deleteMany({});
-    await Staff.deleteMany({});
+    await Promise.all([
+      User.deleteMany({}),
+      Hospital.deleteMany({}),
+      Doctor.deleteMany({}),
+      Patient.deleteMany({}),
+      Department.deleteMany({}),
+      Medicine.deleteMany({}),
+      Staff.deleteMany({}),
+      Room.deleteMany({})
+    ]);
 
-    // Seed Doctors
+    // Create Users
+    const hashedPassword = await bcrypt.hash('123456', 12);
+    const users = [
+      {
+        id: 'USER1',
+        username: 'admin',
+        email: 'admin@hospital.com',
+        password: hashedPassword,
+        role: 'admin'
+      },
+      {
+        id: 'USER2',
+        username: 'doctor1',
+        email: 'doctor@hospital.com',
+        password: hashedPassword,
+        role: 'doctor'
+      },
+      {
+        id: 'USER3',
+        username: 'staff1',
+        email: 'staff@hospital.com',
+        password: hashedPassword,
+        role: 'staff'
+      }
+    ];
+
+    // Create Hospitals
+    const hospitals = [
+      {
+        id: 'H001',
+        name: 'City General Hospital',
+        location: 'Downtown',
+        type: 'General',
+        contact: '+1234567890',
+        email: 'info@citygeneral.com',
+        capacity: 500,
+        rating: 4.5,
+        open24x7: true
+      },
+      {
+        id: 'H002',
+        name: 'Metro Medical Center',
+        location: 'Uptown',
+        type: 'Specialty',
+        contact: '+1234567891',
+        email: 'info@metromedical.com',
+        capacity: 300,
+        rating: 4.2,
+        open24x7: true
+      }
+    ];
+
+    // Create Doctors
     const doctors = [
-      { id: 'DOC101', name: 'Dr. Rajesh Kumar', specialization: 'Cardiology', experience: '15 years', rating: 4.8, available: true, timing: '9:00 AM - 5:00 PM' },
-      { id: 'DOC102', name: 'Dr. Priya Sharma', specialization: 'Neurology', experience: '12 years', rating: 4.7, available: true, timing: '10:00 AM - 6:00 PM' },
-      { id: 'DOC103', name: 'Dr. Amit Patel', specialization: 'Orthopedics', experience: '18 years', rating: 4.9, available: true, timing: '8:00 AM - 4:00 PM' },
-      { id: 'DOC104', name: 'Dr. Sunita Rao', specialization: 'Pediatrics', experience: '10 years', rating: 4.6, available: true, timing: '9:00 AM - 5:00 PM' },
-      { id: 'DOC105', name: 'Dr. Vikram Singh', specialization: 'General Medicine', experience: '20 years', rating: 4.5, available: true, timing: '7:00 AM - 3:00 PM' }
+      {
+        id: 'D001',
+        name: 'Dr. John Smith',
+        specialization: 'Cardiology',
+        experience: '10 years',
+        rating: 4.8,
+        available: true,
+        timing: '9:00 AM - 5:00 PM'
+      },
+      {
+        id: 'D002',
+        name: 'Dr. Sarah Johnson',
+        specialization: 'Neurology',
+        experience: '8 years',
+        rating: 4.6,
+        available: true,
+        timing: '10:00 AM - 6:00 PM'
+      },
+      {
+        id: 'D003',
+        name: 'Dr. Mike Wilson',
+        specialization: 'Orthopedics',
+        experience: '12 years',
+        rating: 4.7,
+        available: false,
+        timing: '8:00 AM - 4:00 PM'
+      }
     ];
-    await Doctor.insertMany(doctors);
 
-    // Seed Patients
+    // Create Patients
     const patients = [
-      { id: 'PAT501', name: 'Ravi Kumar', age: 45, gender: 'Male', phone: '+91-9876543210', address: '123 Main St, Delhi', bloodGroup: 'O+', admitted: false, visitDate: '2024-01-15' },
-      { id: 'PAT502', name: 'Meera Patel', age: 32, gender: 'Female', phone: '+91-9876543211', address: '456 Park Ave, Mumbai', bloodGroup: 'A+', admitted: true, visitDate: '2024-01-16' },
-      { id: 'PAT503', name: 'Suresh Gupta', age: 28, gender: 'Male', phone: '+91-9876543212', address: '789 Lake View, Bangalore', bloodGroup: 'B+', admitted: false, visitDate: '2024-01-17' },
-      { id: 'PAT504', name: 'Anita Verma', age: 55, gender: 'Female', phone: '+91-9876543213', address: '321 Hill Road, Chennai', bloodGroup: 'AB+', admitted: true, visitDate: '2024-01-18' },
-      { id: 'PAT505', name: 'Rohit Sharma', age: 38, gender: 'Male', phone: '+91-9876543214', address: '654 Beach Road, Goa', bloodGroup: 'O-', admitted: false, visitDate: '2024-01-19' }
+      {
+        id: 'P001',
+        name: 'Alice Brown',
+        age: 35,
+        gender: 'Female',
+        phone: '+1234567892',
+        address: '123 Main St',
+        bloodGroup: 'A+',
+        admitted: false,
+        visitDate: '2024-01-15'
+      },
+      {
+        id: 'P002',
+        name: 'Bob Davis',
+        age: 42,
+        gender: 'Male',
+        phone: '+1234567893',
+        address: '456 Oak Ave',
+        bloodGroup: 'O-',
+        admitted: true,
+        roomId: 'R101',
+        visitDate: '2024-01-10'
+      }
     ];
-    await Patient.insertMany(patients);
 
-    // Seed Appointments
-    const appointments = [
-      { id: 'APT901', patientId: 'PAT501', doctorId: 'DOC101', date: '2024-01-20', time: '10:00 AM', status: 'Scheduled' },
-      { id: 'APT902', patientId: 'PAT502', doctorId: 'DOC102', date: '2024-01-21', time: '11:00 AM', status: 'Confirmed' },
-      { id: 'APT903', patientId: 'PAT503', doctorId: 'DOC103', date: '2024-01-22', time: '2:00 PM', status: 'Completed', fee: 500, paymentMethod: 'Cash', paymentStatus: 'Paid' }
+    // Create Departments
+    const departments = [
+      {
+        id: 'DEPT001',
+        name: 'Cardiology',
+        head: 'Dr. John Smith',
+        floor: 2,
+        patientCount: 25
+      },
+      {
+        id: 'DEPT002',
+        name: 'Neurology',
+        head: 'Dr. Sarah Johnson',
+        floor: 3,
+        patientCount: 18
+      },
+      {
+        id: 'DEPT003',
+        name: 'Emergency',
+        head: 'Dr. Mike Wilson',
+        floor: 1,
+        patientCount: 12
+      }
     ];
-    await Appointment.insertMany(appointments);
 
-    // Seed Pharmacy
+    // Create Medicines
     const medicines = [
-      { id: 'MED301', name: 'Paracetamol 500mg', type: 'Tablet', stock: 500, price: 2 },
-      { id: 'MED302', name: 'Amoxicillin 250mg', type: 'Capsule', stock: 200, price: 8 },
-      { id: 'MED303', name: 'Crocin Advance', type: 'Tablet', stock: 300, price: 3 },
-      { id: 'MED304', name: 'Cetirizine 10mg', type: 'Tablet', stock: 150, price: 1.5 },
-      { id: 'MED305', name: 'Omeprazole 20mg', type: 'Capsule', stock: 100, price: 12 }
+      {
+        id: 'MED001',
+        name: 'Paracetamol',
+        type: 'Tablet',
+        stock: 500,
+        price: 2.50
+      },
+      {
+        id: 'MED002',
+        name: 'Amoxicillin',
+        type: 'Capsule',
+        stock: 200,
+        price: 8.75
+      },
+      {
+        id: 'MED003',
+        name: 'Ibuprofen',
+        type: 'Tablet',
+        stock: 300,
+        price: 3.25
+      }
     ];
-    await Pharmacy.insertMany(medicines);
 
-    // Seed Rooms
-    const rooms = [
-      { id: 'R001', roomNumber: 'ICU-101', bedNumber: 'B101-1', type: 'ICU', capacity: 1, occupied: true, patientId: 'PAT502', patientName: 'Meera Patel', admissionDate: '2024-01-16', condition: 'Post Surgery Recovery', equipment: 'Ventilator, Heart Monitor', nurseAssigned: 'Nurse Priya', dailyRate: 8000, status: 'Occupied' },
-      { id: 'R002', roomNumber: 'GW-201', bedNumber: 'B201-1', type: 'General', capacity: 4, occupied: true, patientId: 'PAT504', patientName: 'Anita Verma', admissionDate: '2024-01-18', condition: 'Viral Fever', equipment: 'Basic Care Equipment', nurseAssigned: 'Nurse Sunita', dailyRate: 2500, status: 'Occupied' },
-      { id: 'R003', roomNumber: 'ER-301', bedNumber: 'B301-1', type: 'Emergency', capacity: 2, occupied: false, dailyRate: 4500, status: 'Available' }
+    // Create Staff
+    const staff = [
+      {
+        id: 'S001',
+        name: 'Nurse Mary',
+        role: 'Nurse',
+        shift: 'Day',
+        salary: 45000,
+        joiningDate: '2023-01-15',
+        status: 'Active'
+      },
+      {
+        id: 'S002',
+        name: 'Tech Support Tom',
+        role: 'IT Support',
+        shift: 'Day',
+        salary: 55000,
+        joiningDate: '2023-03-20',
+        status: 'Active'
+      }
     ];
+
+    // Create Rooms
+    const rooms = [
+      {
+        id: 'ROOM001',
+        roomId: 'R101',
+        type: 'General',
+        occupied: true
+      },
+      {
+        id: 'ROOM002',
+        roomId: 'R102',
+        type: 'General',
+        occupied: false
+      },
+      {
+        id: 'ROOM003',
+        roomId: 'R201',
+        type: 'ICU',
+        occupied: false
+      },
+      {
+        id: 'ROOM004',
+        roomId: 'R301',
+        type: 'Private',
+        occupied: false
+      }
+    ];
+
+    // Insert all data
+    await User.insertMany(users);
+    await Hospital.insertMany(hospitals);
+    await Doctor.insertMany(doctors);
+    await Patient.insertMany(patients);
+    await Department.insertMany(departments);
+    await Medicine.insertMany(medicines);
+    await Staff.insertMany(staff);
     await Room.insertMany(rooms);
 
-    // Seed Staff
-    const staff = [
-      { id: 'STF001', name: 'Nurse Priya Sharma', role: 'Nurse', shift: 'Morning', salary: 35000, joiningDate: '2023-01-15', phone: '+91-9876543220', status: 'Active' },
-      { id: 'STF002', name: 'Nurse Sunita Rao', role: 'Nurse', shift: 'Evening', salary: 32000, joiningDate: '2023-02-20', phone: '+91-9876543221', status: 'Active' },
-      { id: 'STF003', name: 'Ramesh Kumar', role: 'Receptionist', shift: 'Full Day', salary: 25000, joiningDate: '2023-03-10', phone: '+91-9876543222', status: 'Active' },
-      { id: 'STF004', name: 'Sunil Yadav', role: 'Ward Boy', shift: 'Morning', salary: 18000, joiningDate: '2023-04-05', phone: '+91-9876543223', status: 'Active' },
-      { id: 'STF005', name: 'Kavita Singh', role: 'Pharmacist', shift: 'Full Day', salary: 40000, joiningDate: '2023-05-12', phone: '+91-9876543224', status: 'Active' }
-    ];
-    await Staff.insertMany(staff);
-
-    console.log('Database seeded successfully!');
+    console.log('✅ Database seeded successfully!');
+    console.log('📧 Test login credentials:');
+    console.log('   Email: admin@hospital.com');
+    console.log('   Password: 123456');
+    
     process.exit(0);
   } catch (error) {
-    console.error('Error seeding database:', error);
+    console.error('❌ Error seeding database:', error);
     process.exit(1);
   }
 };

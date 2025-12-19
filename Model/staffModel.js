@@ -50,4 +50,4 @@ const staffSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Staff', staffSchema);
+module.exports = mongoose.models.Staff || mongoose.model('Staff', staffSchema);

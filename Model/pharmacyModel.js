@@ -25,4 +25,4 @@ const pharmacySchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Pharmacy', pharmacySchema);
+module.exports = mongoose.models.Pharmacy || mongoose.model('Pharmacy', pharmacySchema);

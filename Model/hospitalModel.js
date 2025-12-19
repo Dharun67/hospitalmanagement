@@ -42,4 +42,4 @@ const hospitalSchema = new mongoose.Schema({
     }       
 });
 
-module.exports = mongoose.model('Hospital', hospitalSchema);
+module.exports = mongoose.models.Hospital || mongoose.model('Hospital', hospitalSchema);

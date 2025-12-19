@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../Model/hospitalModel');
+const bcrypt = require('bcryptjs');
+const { User } = require('../Model/mongoModels');
 
 const singleToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -32,20 +33,21 @@ exports.login = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({ email: email, password: password });
-        if (!user) {
+        const user = await User.findOne({ email });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(400).json({
                 status: "fail",
-                message: "User not found"
+                message: "Invalid email or password"
             });
         }
+        
         const token = singleToken(user.id);
         res.status(200).json({
             status: "success",
             token,
             data: {
                 email: user.email,
-                name: user.name,
+                username: user.username,
                 role: user.role
             },
         });
@@ -59,32 +61,37 @@ exports.login = async (req, res) => {
 
 exports.signup = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword, role } = req.body;
+        const { username, email, password, role } = req.body;
         
-        const user = await User.findOne({ email: email });
-        if (user) {
+        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+        if (existingUser) {
             return res.status(400).json({
                 status: "fail",
                 message: "User already exists"
             });
         }
         
+        const hashedPassword = await bcrypt.hash(password, 12);
         const userCount = await User.countDocuments();
-        const newUser = {
-            id: userCount + 1,
-            name: name,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword,
-            role: role || "staff"
-        };
         
-        const createdUser = await User.create(newUser);
-        const token = singleToken(createdUser.id);
+        const newUser = await User.create({
+            id: `USER${userCount + 1}`,
+            username,
+            email,
+            password: hashedPassword,
+            role: role || "staff"
+        });
+        
+        const token = singleToken(newUser.id);
         res.status(201).json({
             status: "success",
             token,
-            data: createdUser
+            data: {
+                id: newUser.id,
+                username: newUser.username,
+                email: newUser.email,
+                role: newUser.role
+            }
         });
     } catch (error) {
         res.status(500).json({
